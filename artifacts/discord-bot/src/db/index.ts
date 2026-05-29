@@ -4,16 +4,12 @@ import * as schema from "./schema.js";
 
 const { Pool } = pg;
 
-if (!process.env.AIVEN_DATABASE_URL) {
-  throw new Error("AIVEN_DATABASE_URL must be set");
+if (!process.env.DATABASE_URL) {
+  throw new Error("DATABASE_URL must be set. Did you forget to provision a database?");
 }
 
-const url = new URL(process.env.AIVEN_DATABASE_URL);
-url.searchParams.delete("sslmode");
-
 export const pool = new Pool({
-  connectionString: url.toString(),
-  ssl: { rejectUnauthorized: false },
+  connectionString: process.env.DATABASE_URL,
 });
 
 export const db = drizzle(pool, { schema });

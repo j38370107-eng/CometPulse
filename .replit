@@ -1,4 +1,4 @@
-modules = ["nodejs-24"]
+modules = ["nodejs-20", "web", "bash", "postgresql-16"]
 
 [deployment]
 router = "application"
@@ -32,7 +32,7 @@ args = "pnpm --filter @workspace/discord-bot run dev"
 outputType = "console"
 
 [agent]
-stack = "PNPM_WORKSPACE"
+stack = "BEST_EFFORT_FALLBACK"
 expertMode = true
 
 [postMerge]
@@ -54,3 +54,6 @@ externalPort = 3000
 [[ports]]
 localPort = 23183
 externalPort = 3001
+
+[nix]
+channel = "stable-25_05"
