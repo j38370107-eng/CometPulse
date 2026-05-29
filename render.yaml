@@ -51,7 +51,7 @@ services:
     name: cometpulse-discord-worker
     env: node
     plan: free
-    buildCommand: npx pnpm@10 install
+    buildCommand: npx pnpm@10 install && npx pnpm@10 --filter @workspace/discord-bot run db:push
     startCommand: npx pnpm@10 --filter @workspace/discord-bot run start
     envVars:
       - key: DISCORD_BOT_TOKEN
