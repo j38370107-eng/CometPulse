@@ -3,7 +3,7 @@ services:
     name: cometpulse-bot
     env: node
     plan: free
-    buildCommand: npm install -g pnpm && pnpm install --frozen-lockfile && pnpm --filter @workspace/api-server run build
+    buildCommand: npm install -g pnpm && pnpm install && pnpm --filter @workspace/api-server run build
     startCommand: pnpm --filter @workspace/api-server run start
     envVars:
       - key: NODE_ENV
@@ -12,7 +12,7 @@ services:
         value: "10000"
       - key: DISCORD_BOT_TOKEN
         sync: false
-      - key: CLIENT_ID
+      - key: DISCORD_CLIENT_ID
         sync: false
       - key: CLIENT_SECRET
         sync: false
@@ -25,7 +25,7 @@ services:
     name: cometpulse-dashboard
     env: node
     plan: free
-    buildCommand: npm install -g pnpm && pnpm install --frozen-lockfile && pnpm --filter @workspace/dashboard run build
+    buildCommand: npm install -g pnpm && pnpm install && pnpm --filter @workspace/dashboard run build
     startCommand: pnpm --filter @workspace/dashboard run start
     envVars:
       - key: NODE_ENV
@@ -34,7 +34,7 @@ services:
         value: "10000"
       - key: DISCORD_BOT_TOKEN
         sync: false
-      - key: CLIENT_ID
+      - key: DISCORD_CLIENT_ID
         sync: false
       - key: CLIENT_SECRET
         sync: false
@@ -51,12 +51,12 @@ services:
     name: cometpulse-discord-worker
     env: node
     plan: free
-    buildCommand: npm install -g pnpm && pnpm install --frozen-lockfile
+    buildCommand: npm install -g pnpm && pnpm install
     startCommand: pnpm --filter @workspace/discord-bot run start
     envVars:
       - key: DISCORD_BOT_TOKEN
         sync: false
-      - key: CLIENT_ID
+      - key: DISCORD_CLIENT_ID
         sync: false
       - key: DATABASE_URL
         sync: false
