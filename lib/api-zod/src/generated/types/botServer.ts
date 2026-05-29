@@ -6,6 +6,11 @@
  * OpenAPI spec version: 0.1.0
  */
 
-export interface HealthStatus {
-  status: string;
+export interface BotServer {
+  id: string;
+  name: string;
+  /** @nullable */
+  icon: string | null;
+  memberCount: number;
+  commandsUsed: number;
 }

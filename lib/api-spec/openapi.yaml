@@ -1,15 +1,16 @@
 openapi: 3.1.0
 info:
-  # Do not change the title, if the title changes, the import paths will be broken
   title: Api
   version: 0.1.0
-  description: API specification
+  description: CometPulse Discord Bot Dashboard API
 servers:
   - url: /api
     description: Base API path
 tags:
   - name: health
     description: Health operations
+  - name: bot
+    description: Bot statistics and info
 paths:
   /healthz:
     get:
@@ -24,6 +25,53 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+
+  /bot/stats:
+    get:
+      operationId: getBotStats
+      tags: [bot]
+      summary: Get bot statistics
+      description: Returns live bot stats including server count, user count, uptime, and status
+      responses:
+        "200":
+          description: Bot statistics
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BotStats"
+
+  /bot/features:
+    get:
+      operationId: getBotFeatures
+      tags: [bot]
+      summary: Get bot feature list
+      description: Returns list of bot features for the landing page
+      responses:
+        "200":
+          description: Feature list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/BotFeature"
+
+  /bot/servers:
+    get:
+      operationId: getBotServers
+      tags: [bot]
+      summary: Get servers the bot is in
+      description: Returns the list of Discord servers this bot is active in
+      responses:
+        "200":
+          description: Server list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/BotServer"
+
 components:
   schemas:
     HealthStatus:
@@ -34,3 +82,63 @@ components:
       required:
         - status
 
+    BotStats:
+      type: object
+      properties:
+        servers:
+          type: integer
+        users:
+          type: integer
+        commands:
+          type: integer
+        uptimeSeconds:
+          type: integer
+        status:
+          type: string
+          enum: [online, offline, idle]
+      required:
+        - servers
+        - users
+        - commands
+        - uptimeSeconds
+        - status
+
+    BotFeature:
+      type: object
+      properties:
+        id:
+          type: string
+        icon:
+          type: string
+        title:
+          type: string
+        description:
+          type: string
+        category:
+          type: string
+      required:
+        - id
+        - icon
+        - title
+        - description
+        - category
+
+    BotServer:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        icon:
+          type: ["string", "null"]
+        memberCount:
+          type: integer
+        commandsUsed:
+          type: integer
+      required:
+        - id
+        - name
+        - icon
+        - memberCount
+        - commandsUsed
