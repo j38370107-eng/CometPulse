@@ -1,0 +1,44 @@
+services:
+  - type: web
+    name: cometpulse-api
+    env: node
+    plan: free
+    buildCommand: pnpm install --frozen-lockfile && pnpm --filter @workspace/api-server run build
+    startCommand: pnpm --filter @workspace/api-server run start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DISCORD_BOT_TOKEN
+        sync: false
+      - key: DISCORD_CLIENT_ID
+        sync: false
+      - key: AIVEN_DATABASE_URL
+        sync: false
+
+  - type: web
+    name: cometpulse-dashboard
+    env: static
+    plan: free
+    buildCommand: pnpm install --frozen-lockfile && BASE_PATH=/ pnpm --filter @workspace/dashboard run build
+    staticPublishPath: artifacts/dashboard/dist/public
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    envVars:
+      - key: VITE_API_URL
+        sync: false
+
+  - type: worker
+    name: cometpulse-bot
+    env: node
+    plan: free
+    buildCommand: pnpm install --frozen-lockfile
+    startCommand: pnpm --filter @workspace/discord-bot run start
+    envVars:
+      - key: DISCORD_BOT_TOKEN
+        sync: false
+      - key: DISCORD_CLIENT_ID
+        sync: false
+      - key: AIVEN_DATABASE_URL
+        sync: false

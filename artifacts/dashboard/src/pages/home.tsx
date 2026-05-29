@@ -2,6 +2,7 @@ import { useGetBotStats, useGetBotFeatures } from "@workspace/api-client-react";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { formatUptime } from "@/lib/format";
+import { useQuery } from "@tanstack/react-query";
 import {
   Server,
   Users,
@@ -13,7 +14,6 @@ import {
   MessageSquare,
   Clock,
   ChevronRight,
-  ExternalLink,
 } from "lucide-react";
 import { Link } from "wouter";
 
@@ -26,6 +26,12 @@ const featureTags = [
 export default function Home() {
   const { data: stats, isLoading: statsLoading } = useGetBotStats();
   const { data: features, isLoading: featuresLoading } = useGetBotFeatures();
+  const { data: inviteData } = useQuery<{ url: string }>({
+    queryKey: ["bot-invite"],
+    queryFn: () => fetch("/api/bot/invite").then((r) => r.json()),
+    staleTime: Infinity,
+  });
+  const inviteUrl = inviteData?.url ?? "#";
 
   const iconMap: Record<string, React.ElementType> = {
     Leveling: Zap,
@@ -119,7 +125,9 @@ export default function Home() {
             {/* CTA Buttons */}
             <div className="flex flex-col gap-3 w-full max-w-xs">
               <a
-                href="#"
+                href={inviteUrl}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="flex items-center justify-center gap-2 w-full h-14 rounded-2xl bg-primary hover:bg-primary/90 text-white text-base font-semibold shadow-[0_0_30px_rgba(124,58,237,0.4)] hover:shadow-[0_0_40px_rgba(124,58,237,0.6)] transition-all border border-primary/50"
               >
                 <Zap className="w-4 h-4" />

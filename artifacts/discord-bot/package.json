@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "tsx src/index.ts",
+    "start": "tsx src/index.ts",
     "db:push": "drizzle-kit push --config drizzle.config.ts"
   },
   "dependencies": {

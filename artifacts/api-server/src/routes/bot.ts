@@ -74,4 +74,16 @@ router.get("/bot/servers", (_req, res) => {
   res.json(data);
 });
 
+router.get("/bot/invite", (_req, res) => {
+  const clientId = process.env.DISCORD_CLIENT_ID;
+  if (!clientId) {
+    res.status(500).json({ error: "DISCORD_CLIENT_ID not configured" });
+    return;
+  }
+  const url =
+    `https://discord.com/oauth2/authorize?client_id=${clientId}` +
+    `&permissions=8&scope=bot+applications.commands`;
+  res.json({ url });
+});
+
 export default router;
