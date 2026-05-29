@@ -432,6 +432,9 @@ importers:
       pg:
         specifier: ^8.20.0
         version: 8.20.0
+      tsx:
+        specifier: 'catalog:'
+        version: 4.21.0
     devDependencies:
       '@types/node':
         specifier: 'catalog:'
@@ -442,9 +445,6 @@ importers:
       drizzle-kit:
         specifier: ^0.31.10
         version: 0.31.10
-      tsx:
-        specifier: 'catalog:'
-        version: 4.21.0
 
   artifacts/mockup-sandbox:
     devDependencies:
