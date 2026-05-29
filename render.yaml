@@ -3,13 +3,13 @@ services:
     name: cometpulse-bot
     env: node
     plan: free
-    buildCommand: npx pnpm@10 install && npx pnpm@10 --filter @workspace/discord-bot run db:push && npx pnpm@10 --filter @workspace/api-server run build
-    startCommand: npx concurrently --kill-others "npx pnpm@10 --filter @workspace/api-server run start" "npx pnpm@10 --filter @workspace/discord-bot run start"
+    buildCommand: corepack enable && pnpm install && pnpm --filter @workspace/discord-bot run db:push && pnpm --filter @workspace/api-server run build
+    startCommand: npx concurrently --kill-others "pnpm --filter @workspace/api-server run start" "pnpm --filter @workspace/discord-bot run start"
     envVars:
       - key: NODE_ENV
         value: production
       - key: PORT
-        value: "10000"
+        value: "3000"
       - key: DISCORD_BOT_TOKEN
         sync: false
       - key: DISCORD_CLIENT_ID
@@ -25,13 +25,13 @@ services:
     name: cometpulse-dashboard
     env: node
     plan: free
-    buildCommand: npx pnpm@10 install && npx pnpm@10 --filter @workspace/dashboard run build
-    startCommand: npx pnpm@10 --filter @workspace/dashboard run start
+    buildCommand: corepack enable && pnpm install && pnpm --filter @workspace/dashboard run build
+    startCommand: pnpm --filter @workspace/dashboard run start
     envVars:
       - key: NODE_ENV
         value: production
       - key: PORT
-        value: "10000"
+        value: "3000"
       - key: DISCORD_BOT_TOKEN
         sync: false
       - key: DISCORD_CLIENT_ID
