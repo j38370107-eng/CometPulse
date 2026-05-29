@@ -3,7 +3,7 @@ services:
     name: cometpulse-bot
     env: node
     plan: free
-    buildCommand: npx pnpm@10 install && npx pnpm@10 --filter @workspace/db run push && npx pnpm@10 --filter @workspace/api-server run build
+    buildCommand: npx pnpm@10 install && npx pnpm@10 --filter @workspace/discord-bot run db:push && npx pnpm@10 --filter @workspace/api-server run build
     startCommand: npx concurrently --kill-others "npx pnpm@10 --filter @workspace/api-server run start" "npx pnpm@10 --filter @workspace/discord-bot run start"
     envVars:
       - key: NODE_ENV
