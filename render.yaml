@@ -3,7 +3,7 @@ services:
     name: cometpulse-bot
     env: node
     plan: free
-    buildCommand: npm install -g pnpm && pnpm install && pnpm --filter @workspace/api-server run build
+    buildCommand: corepack enable pnpm && pnpm install && pnpm --filter @workspace/api-server run build
     startCommand: pnpm --filter @workspace/api-server run start
     envVars:
       - key: NODE_ENV
@@ -25,7 +25,7 @@ services:
     name: cometpulse-dashboard
     env: node
     plan: free
-    buildCommand: npm install -g pnpm && pnpm install && pnpm --filter @workspace/dashboard run build
+    buildCommand: corepack enable pnpm && pnpm install && pnpm --filter @workspace/dashboard run build
     startCommand: pnpm --filter @workspace/dashboard run start
     envVars:
       - key: NODE_ENV
@@ -51,7 +51,7 @@ services:
     name: cometpulse-discord-worker
     env: node
     plan: free
-    buildCommand: npm install -g pnpm && pnpm install
+    buildCommand: corepack enable pnpm && pnpm install
     startCommand: pnpm --filter @workspace/discord-bot run start
     envVars:
       - key: DISCORD_BOT_TOKEN
