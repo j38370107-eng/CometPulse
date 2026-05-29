@@ -20,7 +20,7 @@ import { Link } from "wouter";
 const featureTags = [
   { icon: Zap, label: "Leveling" },
   { icon: Gift, label: "Giveaways" },
-  { icon: Shield, label: "Moderation" },
+  { icon: Terminal, label: "Utility" },
 ];
 
 export default function Home() {
@@ -126,12 +126,12 @@ export default function Home() {
                 Add to Server
                 <ChevronRight className="w-4 h-4" />
               </a>
-              <Link
-                href="/servers"
+              <button
+                onClick={() => document.getElementById("features")?.scrollIntoView({ behavior: "smooth" })}
                 className="flex items-center justify-center w-full h-12 rounded-2xl border border-border/50 bg-card/40 hover:bg-card/70 text-foreground text-base font-medium transition-all backdrop-blur"
               >
                 Learn More
-              </Link>
+              </button>
             </div>
           </section>
 
@@ -158,7 +158,7 @@ export default function Home() {
           </section>
 
           {/* ── Features ── */}
-          <section className="py-10 px-5 max-w-lg mx-auto w-full pb-20">
+          <section id="features" className="py-10 px-5 max-w-lg mx-auto w-full pb-20">
             <div className="mb-10">
               <h2 className="text-4xl font-extrabold tracking-tight mb-3">
                 Everything You Need
@@ -180,7 +180,7 @@ export default function Home() {
               </div>
             ) : (
               <div className="flex flex-col gap-4">
-                {features?.map((feature) => {
+                {features?.slice(0, -2).map((feature) => {
                   const Icon = iconMap[feature.title] || Zap;
                   return (
                     <div
