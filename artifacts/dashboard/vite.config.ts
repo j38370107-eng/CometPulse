@@ -6,10 +6,10 @@ import runtimeErrorOverlay from "@replit/vite-plugin-runtime-error-modal";
 
 const isBuild = process.argv.includes("build");
 
-const rawPort = process.env.PORT ?? "3000";
+const rawPort = process.env.DASHBOARD_PORT ?? "23183";
 const port = Number(rawPort);
 if (Number.isNaN(port) || port <= 0) {
-  throw new Error(`Invalid PORT value: "${rawPort}"`);
+  throw new Error(`Invalid DASHBOARD_PORT value: "${rawPort}"`);
 }
 
 const basePath = process.env.BASE_PATH ?? "/";

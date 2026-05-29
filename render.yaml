@@ -1,44 +1,62 @@
 services:
   - type: web
-    name: cometpulse-api
+    name: cometpulse-bot
     env: node
     plan: free
-    buildCommand: pnpm install --frozen-lockfile && pnpm --filter @workspace/api-server run build
+    buildCommand: npm install -g pnpm && pnpm install --frozen-lockfile && pnpm --filter @workspace/api-server run build
     startCommand: pnpm --filter @workspace/api-server run start
     envVars:
       - key: NODE_ENV
         value: production
+      - key: PORT
+        value: "10000"
       - key: DISCORD_BOT_TOKEN
         sync: false
-      - key: DISCORD_CLIENT_ID
+      - key: CLIENT_ID
         sync: false
-      - key: AIVEN_DATABASE_URL
+      - key: CLIENT_SECRET
+        sync: false
+      - key: SESSION_SECRET
+        sync: false
+      - key: DATABASE_URL
         sync: false
 
   - type: web
     name: cometpulse-dashboard
-    env: static
+    env: node
     plan: free
-    buildCommand: pnpm install --frozen-lockfile && BASE_PATH=/ pnpm --filter @workspace/dashboard run build
-    staticPublishPath: artifacts/dashboard/dist/public
-    routes:
-      - type: rewrite
-        source: /*
-        destination: /index.html
+    buildCommand: npm install -g pnpm && pnpm install --frozen-lockfile && pnpm --filter @workspace/dashboard run build
+    startCommand: pnpm --filter @workspace/dashboard run start
     envVars:
-      - key: VITE_API_URL
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: "10000"
+      - key: DISCORD_BOT_TOKEN
+        sync: false
+      - key: CLIENT_ID
+        sync: false
+      - key: CLIENT_SECRET
+        sync: false
+      - key: SESSION_SECRET
+        sync: false
+      - key: DATABASE_URL
+        sync: false
+      - key: BOT_API_URL
+        sync: false
+      - key: BASE_URL
         sync: false
 
   - type: worker
-    name: cometpulse-bot
+    name: cometpulse-discord-worker
     env: node
     plan: free
-    buildCommand: pnpm install --frozen-lockfile
+    buildCommand: npm install -g pnpm && pnpm install --frozen-lockfile
     startCommand: pnpm --filter @workspace/discord-bot run start
     envVars:
       - key: DISCORD_BOT_TOKEN
         sync: false
-      - key: DISCORD_CLIENT_ID
+      - key: CLIENT_ID
         sync: false
-      - key: AIVEN_DATABASE_URL
+      - key: DATABASE_URL
         sync: false
